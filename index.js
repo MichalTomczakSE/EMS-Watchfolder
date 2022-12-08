@@ -11,6 +11,8 @@ watch(`${watchFolder}`, {
     awaitWriteFinish: true,
     ignoreInitial: true,
 })
-    .on('add', () => {console.log('file added!')})
-    .on('error', error => console.log(`Error:`, error))
-    .on('ready', () => console.log(`Initial scan complete. Ready for changes`));
+    .on('add', () => {
+        console.log(`${reset} file has been added to watch-folder!`)
+    })
+    .on('error', error => console.log(`${red} Error:`, error))
+    .on('ready', () => console.log(`${green}Initial scan complete. Ready for changes`));
