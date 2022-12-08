@@ -19,8 +19,19 @@ watch(`${watchFolder}`, {
                 await unlink(`${watchFolder}/${String(fileName)}`)
                 return console.log(`${red}Wrong file format, program is aborted`);
             }
-         console.log(`${green}${fileName} has been loaded without error!`)
-
+            const getData = await readFile('./data/data.json', {
+                encoding: 'utf8',
+            });
+            const data = JSON.parse(getData);
+            if (data) {
+                data.files.push(
+                    {
+                        'name':`${fileName}`,
+                        'id':`${data.files.length}`});
+                data.id = data.files.length;
+            }
+            await writeFile('./data/data.json', JSON.stringify(data));
+            console.log('File has been successfully saved in database!')
         } catch (error) {
             if (error) {
                 console.log(`${red} ${error}`)
