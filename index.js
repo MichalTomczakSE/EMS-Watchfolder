@@ -1,7 +1,8 @@
 const {watch} = require('chokidar');
-const {copyFile, readFile, writeFile, unlink} = require('fs').promises;
+const {readFile, writeFile, unlink, rename} = require('fs').promises;
 const {basename, extname} = require('path');
 const watchFolder = process.argv[2];
+const transcodingFolder = process.argv[3];
 const {colors} = require('./utils/colors');
 const {green, yellow, red, white} = colors;
 const {acceptableFileExtensions: extensions} = require('./data/extensions');
@@ -30,7 +31,9 @@ watch(`${watchFolder}`, {
             data.id = data.files.length;
 
             await writeFile('./data/data.json', JSON.stringify(data));
-            console.log('File has been successfully saved in database!')
+            await rename(`${watchFolder}/${fileName}`,`${transcodingFolder}/${fileName.slice(0,10)}${extname(path)}/`)
+            console.log('File has been successfully saved in database, and moved to transcoder!')
+
         } catch (error) {
             if (error) {
                 console.log(`${red} ${error}`)
