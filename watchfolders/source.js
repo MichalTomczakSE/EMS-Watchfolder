@@ -9,18 +9,19 @@ const {colors} = require('../utils/colors');
 
 const {green, yellow, red, white} = colors;
 
-const ingestFolder = (watchFolder,transcodingFolder) =>
-{
+const ingestFolder = (watchFolder, transcodingFolder) => {
+
     watch(`${watchFolder}`, {
-        usePolling:true,
+        usePolling: true,
         awaitWriteFinish: true,
         ignoreInitial: true,
     })
         .on('add', async path => {
             const fileName = String(basename(path));
+            const fileExt = String(extname(path));
             console.log(`${white}File ${fileName} has been added to ${watchFolder}`)
             try {
-                if (!extensions.includes(extname(path))) {
+                if (!extensions.includes(fileExt)) {
                     await unlink(`${watchFolder}/${fileName}`)
                     return console.log(`${red}Wrong file format, program is aborted`);
                 }
@@ -42,9 +43,9 @@ const ingestFolder = (watchFolder,transcodingFolder) =>
                     .size('1920x1080')
                     .on('end', async () => {
                         await unlink(`${watchFolder}/${fileName}`)
-                        console.log(`${green} file scaled and copied successfully! Generating video starting soon...`)
+                        console.log(`${green}File scaled and copied successfully! Generating video starting soon...`)
                     })
-                    .output(`${transcodingFolder}/${fileName.slice(0, 10)}`)
+                    .output(`${transcodingFolder}/${fileName.slice(0, 10)}${fileExt}`)
                     .run();
 
             } catch (error) {
