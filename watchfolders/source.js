@@ -1,9 +1,7 @@
 const {watch} = require("chokidar");
-
 const {readFile, writeFile, unlink} = require('fs').promises;
 const {basename, extname} = require('path');
 const ffmpeg = require('fluent-ffmpeg');
-
 const {acceptableFileExtensions: extensions} = require("../data/extensions");
 const {colors} = require('../utils/colors');
 
