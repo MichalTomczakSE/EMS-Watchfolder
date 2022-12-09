@@ -1,9 +1,9 @@
 const {watch} = require('chokidar');
 const {copyFile, readFile, writeFile, unlink} = require('fs').promises;
-const {basename,extname} = require('path');
+const {basename, extname} = require('path');
 const watchFolder = process.argv[2];
 const {colors} = require('./utils/colors');
-const {green,yellow,red,white} = colors;
+const {green, yellow, red, white} = colors;
 const {acceptableFileExtensions: extensions} = require('./data/extensions');
 
 watch(`${watchFolder}`, {
@@ -12,24 +12,23 @@ watch(`${watchFolder}`, {
     ignoreInitial: true,
 })
     .on('add', async path => {
-        const fileName = basename(path);
+        const fileName = String(basename(path));
         console.log(`${white}File ${fileName} has been added to ${watchFolder}`)
         try {
             if (!extensions.includes(extname(path))) {
-                await unlink(`${watchFolder}/${String(fileName)}`)
+                await unlink(`${watchFolder}/${fileName}`)
                 return console.log(`${red}Wrong file format, program is aborted`);
             }
-            const getData = await readFile('./data/data.json', {
+            const data = JSON.parse(await readFile('./data/data.json', {
                 encoding: 'utf8',
-            });
-            const data = JSON.parse(getData);
-            if (data) {
-                data.files.push(
-                    {
-                        'name':`${fileName}`,
-                        'id':`${data.files.length}`});
-                data.id = data.files.length;
-            }
+            }));
+            data.files.push(
+                {
+                    'name': `${fileName}`,
+                    'id': `${data.files.length}`
+                });
+            data.id = data.files.length;
+
             await writeFile('./data/data.json', JSON.stringify(data));
             console.log('File has been successfully saved in database!')
         } catch (error) {
