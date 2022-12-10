@@ -13,7 +13,7 @@ const createVideo = (background, fileName) => {
         `C:\\destination\\${fileName}.mp4`
     ]);
 
-    ffmpegOutputHelper(ffmpeg);
+    ffmpegOutputHelper(ffmpeg,background);
 }
 
 module.exports = {
