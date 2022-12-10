@@ -17,10 +17,11 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
         .on('add', async path => {
             const fileName = String(basename(path));
             const fileExt = String(extname(path));
+            const filePath = `${watchFolder}/${fileName}`;
             console.log(`${white}File ${fileName} has been added to ${watchFolder}`)
             try {
                 if (!extensions.includes(fileExt)) {
-                    await unlink(`${watchFolder}/${fileName}`)
+                    await unlink(filePath)
                     return console.log(`${red}Wrong file format, program is aborted`);
                 }
                 const data = JSON.parse(await readFile('./data/data.json', {
@@ -34,10 +35,8 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
                 data.id = data.files.length;
 
                 await writeFile('./data/data.json', JSON.stringify(data));
-
                 console.log('File has been successfully saved in database, and moved to transcoder!');
-
-                scaleImage(`${watchFolder}/${fileName}`,transcodingFolder, fileName);
+                scaleImage(filePath,transcodingFolder, fileName);
 
             } catch (error) {
                 if (error) {
@@ -45,9 +44,9 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
                 }
             }
         })
-         .on('error', error => console.log(`${red}Error:`, error))
-        .on('unlink', (path) => console.log(`${yellow}File ${basename(path)} has been deleted.`))
-        .on('ready', () => console.log(`${green}Initial scan complete. Ready for changes`));
+         .on('error', error => console.log(`${red}Error:`, error, ${white}))
+        .on('unlink', (path) => console.log(`${yellow}File ${basename(path)} has been deleted.${white}`))
+        .on('ready', () => console.log(`${green}Initial scan complete. Ready for changes${white}`));
 }
 
 module.exports = {
