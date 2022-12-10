@@ -1,28 +1,19 @@
-const ffmpeg = require("fluent-ffmpeg");
+const { spawn } = require('child_process');
+const {ffmpegOutputHelper} = require("./errorHandler");
+const createVideo = (background, fileName) => {
 
-const createVideo = (imageSequence, backgroundImage, outputFilename) => {
-    ffmpeg()
-        .input(imageSequence)
-        .input(backgroundImage)
-        .complexFilter(
-            [
-                {
-                    filter: 'scale',
-                    options: '1920x1080',
-                    inputs: '[0:v]',
-                    outputs: 'scaled'
-                },
-                {
-                    filter: 'overlay',
-                    options: 'shortest=1',
-                    inputs: ['scaled', '[1:v]'],
-                    outputs: 'output'
-                }
-            ],
-            'output'
-        )
-        .output(outputFilename)
-        .run();
+    const ffmpeg = spawn('ffmpeg', [
+
+        '-i', `C:\\PRACA\\EMS_WATCHFOLDER\\data\\sequence\\ramka_%05d.png`,
+        '-i', `${background}`, '-s', '1920x1080',
+        '-filter_complex', '[1:v][0:v]overlay=0:0[out]',
+        '-map', '[out]',
+        '-c:v', 'libx264',
+        '-s', '1920x1080',
+        `C:\\destination\\${fileName}.mp4`
+    ]);
+
+    ffmpegOutputHelper(ffmpeg);
 }
 
 module.exports = {
