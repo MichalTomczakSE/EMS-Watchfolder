@@ -1,0 +1,6 @@
+{
+  "watchFolder": "/path/",
+  "transcodingFolder": "/path/",
+  "destinationFolder": "/path/",
+  "sequenceFolder" : "/path/"
+}
