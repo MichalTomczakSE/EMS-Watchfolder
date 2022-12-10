@@ -9,8 +9,8 @@ const createVideo = (background, fileName) => {
         '-filter_complex', '[1:v][0:v]overlay=0:0[out]',
         '-map', '[out]',
         '-c:v', 'libx264',
-        '-s', '1920x1080',
-        `C:\\destination\\${fileName}.mp4`
+        '-b:v', '5M',
+        `C:\\destination\\${fileName.slice(0,10)}.mp4`
     ]);
 
     ffmpegOutputHelper(ffmpeg,background);
