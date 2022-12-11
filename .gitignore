@@ -1,2 +1,4 @@
 node_modules
 data/sequence
+data/data.json
+data/processes.json
