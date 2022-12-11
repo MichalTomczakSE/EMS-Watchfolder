@@ -44,7 +44,7 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
                 }
             }
         })
-         .on('error', error => console.log(`${red}Error:`, error, ${white}))
+        .on('error', error => console.log(`${red}Error:`, error, white))
         .on('unlink', (path) => console.log(`${yellow}File ${basename(path)} has been deleted.${white}`))
         .on('ready', () => console.log(`${green}Initial scan complete. Ready for changes${white}`));
 }
