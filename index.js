@@ -1,5 +1,6 @@
-const [,,watchFolder,transcodingFolder,destinationFolder] = process.argv;
+const pathTo = require('./data/processes.json')
+
 const {ingestFolder} = require("./watchfolders/source");
 const {videoTranscoder} = require("./watchfolders/transcoder");
-ingestFolder(watchFolder,transcodingFolder);
-videoTranscoder(transcodingFolder,destinationFolder);
+ingestFolder(pathTo.watchFolder,pathTo.transcodingFolder);
+videoTranscoder(pathTo.sequenceFolder,pathTo.transcodingFolder,pathTo.destinationFolder);
