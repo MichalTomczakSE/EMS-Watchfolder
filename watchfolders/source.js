@@ -15,7 +15,8 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
         ignoreInitial: true,
     })
         .on('add', async path => {
-            const fileName = String(basename(path));
+            let arr = [];
+            let fileName = String(basename(path));
             const fileExt = String(extname(path));
             const filePath = `${watchFolder}/${fileName}`;
             console.log(`${white}File ${fileName} has been added to ${watchFolder}`)
@@ -32,11 +33,16 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
                         'name': `${fileName}`,
                         'id': `${data.files.length}`
                     });
+                Object.entries(data.files).filter(e => {
+                    if (e[1].name === fileName) {
+                        arr.push(e);
+                    }
+                });
+                fileName = `${arr.length}_${fileName}`
                 data.id = data.files.length;
-
                 await writeFile('./data/data.json', JSON.stringify(data));
                 console.log('File has been successfully saved in database, and moved to transcoder!');
-                scaleImage(filePath,transcodingFolder, fileName);
+                scaleImage(filePath, transcodingFolder, fileName);
 
             } catch (error) {
                 if (error) {
@@ -46,7 +52,7 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
         })
         .on('error', error => console.log(`${red}Error:`, error, white))
         .on('unlink', (path) => console.log(`${yellow}File ${basename(path)} has been deleted.${white}`))
-        .on('ready', () => console.log(`${green}Initial scan complete. Ready for changes${white}`));
+        .on('ready', () => console.log(`${green}Initial scan complete. Watch-folder for image scaling is ready for changes for changes${white}`));
 }
 
 module.exports = {
