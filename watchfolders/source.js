@@ -15,7 +15,6 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
         ignoreInitial: true,
     })
         .on('add', async path => {
-            let arr = [];
             let fileName = String(basename(path));
             const fileExt = String(extname(path));
             const filePath = `${watchFolder}/${fileName}`;
@@ -33,14 +32,19 @@ const ingestFolder = (watchFolder, transcodingFolder) => {
                         'name': `${fileName}`,
                         'id': `${data.files.length}`
                     });
-                Object.entries(data.files).filter(e => {
-                    if (e[1].name === fileName) {
-                        arr.push(e);
-                    }
-                });
-                fileName = `${arr.length}_${fileName}`
+
+                const filesWithSameName =
+                    Object
+                        .entries(data.files)
+                        .map(e => e[1].name === fileName ? e : false)
+                        .filter(e => e !== false);
+
+                if (filesWithSameName.length >=2) {
+                    fileName = `${filesWithSameName.length}_${fileName}`
+                }
+
                 data.id = data.files.length;
-                await writeFile('./data/data.json', JSON.stringify(data));
+                    await writeFile('./data/data.json', JSON.stringify(data));
                 console.log('File has been successfully saved in database, and moved to transcoder!');
                 scaleImage(filePath, transcodingFolder, fileName);
 
