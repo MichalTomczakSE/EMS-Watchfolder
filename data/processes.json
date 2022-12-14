@@ -13,7 +13,7 @@
   "setVideoCodec": "-c:v",
   "videoCodec":"libx264",
   "setVideoBitrate": "-b:v",
-  "videoBitrate": "5M"
+  "videoBitrate": "5M",
+  "videoFilter": "-vf",
+  "sampleAspectRatio": "scale=1920:1080,setsar=1"
 }
-
-
