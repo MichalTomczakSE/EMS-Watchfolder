@@ -2,7 +2,16 @@
 
 The EMS-Watchfolder is a simple code that allows you to create a video from a sequence of png images on top and another image on the bottom.
 
-## 'Video and image in'
+## 'Preview'
+
+
+- This is how looks your starting photo
+>![Cute_dog](https://user-images.githubusercontent.com/116025688/207705631-ed0c7f79-0336-4db9-b1f8-f64ea64bb4be.jpg)
+- This is how looks your sequence images after rendering
+>![front](https://user-images.githubusercontent.com/116025688/207705849-5a9f6b2f-af3e-410f-8fa4-0e67b997671c.gif)
+- And this is final result of merging image as background with sequence on front!
+>![black](https://user-images.githubusercontent.com/116025688/207705663-ed36d51c-bb66-4e0a-bcc3-306dff0ac038.gif)
+
 
 ### Requirements
 
