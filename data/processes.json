@@ -4,6 +4,8 @@
   "destinationFolder": "/path/",
   "sequenceFolder" : "/path/",
   "input": "-i",
+  "framerate": "-framerate",
+  "framerateValue": "30",
   "scale": "-s",
   "resolution":"1920x1080",
   "filter": "-filter_complex",
@@ -13,7 +15,7 @@
   "setVideoCodec": "-c:v",
   "videoCodec":"libx264",
   "setVideoBitrate": "-b:v",
-  "videoBitrate": "5M",
+  "videoBitrate": "10M",
   "videoFilter": "-vf",
   "sampleAspectRatio": "scale=1920:1080,setsar=1"
 }
