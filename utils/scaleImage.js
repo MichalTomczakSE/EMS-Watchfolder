@@ -1,14 +1,13 @@
 const {spawn} = require('child_process');
 const {ffmpegOutputHelper} = require("./errorHandler");
-
+const {input, videoFilter,sampleAspectRatio} = require('../data/processes.json')
 const scaleImage = (source, destination, fileName) => {
 
     const ffmpeg = spawn('ffmpeg', [
-        '-i', `${source}`,
-        '-vf', 'scale=1920:1080,setsar=1',
+        input, `${source}`,
+        videoFilter,sampleAspectRatio,
         `${destination}/${fileName}`
     ]);
-console.log(source)
     ffmpegOutputHelper(ffmpeg, source);
 }
 
