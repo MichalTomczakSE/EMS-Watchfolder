@@ -49,6 +49,6 @@ By default, ``watchFolder`` accepts files with the extensions defined in the **e
 
 If the format is correct, program stores its original name and ID in **data.json** file. After that **scaleImage.js** function starts to scale image file, and sends it to ``transcodingFolder``.
 
-After that function in *transcoder.js** which is listening to ``transcodingFolder`` runs function declared in **createVideo.js** and starts creating .mp4 video from ``sequenceFolder`` on top, and scaled image as a background.
+After that function in **transcoder.js** which is listening to ``transcodingFolder`` runs function declared in **createVideo.js** and starts creating .mp4 video from ``sequenceFolder`` on top, and scaled image as a background.
 
 Finally processed file is rendered to ``destinationFolder``.
